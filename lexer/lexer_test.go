@@ -12,9 +12,9 @@ func TestNextToken(t *testing.T) {
 		x + y;
 	};
 	let result = add(five, ten);`
-	tests := []struct {
-		expectedType    token.TokenType
-		expectedLiteral string
+	expectedSequence := []struct {
+		tokenType    token.TokenType
+		tokenLiteral string
 	}{
 		{token.LET, "let"},
 		{token.IDENT, "five"},
@@ -55,18 +55,18 @@ func TestNextToken(t *testing.T) {
 		{token.EOF, ""},
 	}
 
-	l := New(input)
+	sut := New(input)
 
-	for i, tt := range tests {
+	for i, expected := range expectedSequence {
 
-		tok := l.NextToken()
+		actual := sut.NextToken()
 
-		if tok.Type != tt.expectedType {
-			t.Fatalf("tests[%d] tokentype - expected=%q actual=%q", i, tt.expectedType, tok.Type)
+		if actual.Type != expected.tokenType {
+			t.Fatalf("tests[%d] tokentype - expected=%q actual=%q", i, expected.tokenType, actual.Type)
 		}
 
-		if tok.Literal != tt.expectedLiteral {
-			t.Fatalf("tests[%d] literal - expected=%q actual=%q", i, tt.expectedLiteral, tok.Literal)
+		if actual.Literal != expected.tokenLiteral {
+			t.Fatalf("tests[%d] literal - expected=%q actual=%q", i, expected.tokenLiteral, actual.Literal)
 		}
 	}
 }
