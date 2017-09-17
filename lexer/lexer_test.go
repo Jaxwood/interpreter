@@ -1,12 +1,12 @@
 package lexer
 
 import (
-	"testing"
 	"interpreter/token"
+	"testing"
 )
 
 func TestNextToken(t *testing.T) {
-		input := `let five = 5;
+	input := `let five = 5;
 	let ten = 10;
 
 	let add = fn(x, y) {
@@ -16,7 +16,7 @@ func TestNextToken(t *testing.T) {
 	let result = add(five, ten);
 	`
 	tests := []struct {
-		expectedType 	token.TokenType
+		expectedType    token.TokenType
 		expectedLiteral string
 	}{
 		{token.LET, "let"},
