@@ -30,6 +30,8 @@ const (
 	RBRACE = "}"
 	LT     = "<"
 	GT     = ">"
+	EQ     = "=="
+	NOT_EQ = "!="
 
 	FUNCTION = "function"
 	LET      = "let"
