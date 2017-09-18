@@ -108,12 +108,10 @@ func (l *Lexer) readIdentifier() string {
 	return l.input[position:l.position]
 }
 
-func (l *Lexer) skipWhiteSpace() string {
-	position := l.position
-	for isWhiteSpace(l.ch) {
+func (l *Lexer) skipWhiteSpace() {
+	for l.ch == ' ' || l.ch == '\t' || l.ch == '\n' || l.ch == '\r' {
 		l.readChar()
 	}
-	return l.input[position:l.position]
 }
 
 func (l *Lexer) readNumber() string {
