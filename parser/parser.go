@@ -125,7 +125,6 @@ func (p *Parser) ParseProgram() *ast.Program {
 		}
 		p.nextToken()
 	}
-	println(program)
 	return program
 }
 
