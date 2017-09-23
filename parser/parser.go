@@ -68,8 +68,6 @@ func New(l *lexer.Lexer) *Parser {
 		errors: []string{},
 	}
 
-	p.nextToken() // set curToken
-	p.nextToken() // set peekToken
 	p.prefixParseFns = make(map[token.TokenType]prefixParseFn)
 	p.registerPrefix(token.IDENT, p.parseIdentifier)
 	p.registerPrefix(token.INT, p.parseIntegerLiteral)
@@ -85,6 +83,9 @@ func New(l *lexer.Lexer) *Parser {
 	p.registerInfix(token.NOT_EQ, p.parseInfixExpression)
 	p.registerInfix(token.LT, p.parseInfixExpression)
 	p.registerInfix(token.GT, p.parseInfixExpression)
+
+	p.nextToken() // set curToken
+	p.nextToken() // set peekToken
 
 	return p
 }
@@ -211,7 +212,7 @@ func (p *Parser) parseExpression(precedence int) ast.Expression {
 
 	for !p.peekTokenIs(token.SEMICOLON) && precedence < p.peekPrecedence() {
 		infix := p.infixParseFns[p.peekToken.Type]
-		if infix != nil {
+		if infix == nil {
 			return leftExp
 		}
 		p.nextToken()
