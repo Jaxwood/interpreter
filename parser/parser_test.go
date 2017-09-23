@@ -264,3 +264,23 @@ func TestParsingInfixExpressions(t *testing.T) {
 		}
 	}
 }
+
+func TestOperatorPrecendenceParsing(t *testing.T) {
+	tests := []struct {
+		input string
+		expected string
+	}{
+		{ "-a * b", "((-a)*b)" },
+	}
+
+	for _, tt := range tests {
+		l := lexer.New(tt.input)
+		p := New(l)
+		program := p.ParseProgram()
+
+		actual := program.String()
+		if actual != tt.expected {
+			t.Errorf("expected=%q got=%q", tt.expected, actual)
+		}
+	}
+}
